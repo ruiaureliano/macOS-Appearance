@@ -4,3 +4,5 @@
 ![macOS Catalina](https://img.shields.io/badge/macOS-10.15-990d5b)
 
 Just a simple macOS app to observe changes for the macOS appearance 💪
+
+![macOS App](https://raw.githubusercontent.com/ruiaureliano/macOS-Appearance/master/app.gif)
