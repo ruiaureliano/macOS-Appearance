@@ -19,12 +19,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
 
         /**
-         * Make app always light
-         **/
-
-        NSApp.appearance = NSAppearance(named: .aqua)
-
-        /**
          **  KVO Notification
          **/
 
@@ -52,25 +46,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func getAppearance() {
         self.osAppearance = .light
         if #available(OSX 10.15, *) {
-            var appearance: OSAppearance = .light
-            if let appleInterfaceStyle = UserDefaults.standard.object(forKey: kAppleInterfaceStyle) as? String {
-                if appleInterfaceStyle.lowercased().contains("dark") {
-                    appearance = .dark
-                }
-            }
-            var switchesAutomatically: Bool = false
-            if let appleInterfaceStyleSwitchesAutomatically = UserDefaults.standard.object(forKey: kAppleInterfaceStyleSwitchesAutomatically) as? Bool {
-                switchesAutomatically = appleInterfaceStyleSwitchesAutomatically
-            }
-            if switchesAutomatically {
-                switch appearance {
-                case .light:
-                    self.osAppearance = .dark
-                case .dark:
-                    self.osAppearance = .light
-                }
-            } else {
-                self.osAppearance = appearance
+            let appearanceDescription = NSApplication.shared.effectiveAppearance.debugDescription.lowercased()
+            if appearanceDescription.contains("dark") {
+                self.osAppearance = .dark
             }
 
         } else if #available(OSX 10.14, *) {
