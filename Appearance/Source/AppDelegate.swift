@@ -14,10 +14,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var window: NSWindow!
     @IBOutlet weak var textfield: NSTextField!
+    @IBOutlet weak var textview: NSTextView!
     var osAppearance: OSAppearance = .light
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
 
+        textview.font = NSFont(name: "Menlo", size: 14)
         /**
          **  KVO Notification
          **/
@@ -47,12 +49,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.osAppearance = .light
         if #available(OSX 10.15, *) {
             let appearanceDescription = NSApplication.shared.effectiveAppearance.debugDescription.lowercased()
+            self.textview.textStorage?.append(NSAttributedString(string: "appearanceDescription: \(appearanceDescription)\n"))
             if appearanceDescription.contains("dark") {
                 self.osAppearance = .dark
             }
-
         } else if #available(OSX 10.14, *) {
             if let appleInterfaceStyle = UserDefaults.standard.object(forKey: kAppleInterfaceStyle) as? String {
+                self.textview.textStorage?.append(NSAttributedString(string: "appleInterfaceStyle: \(appleInterfaceStyle)\n"))
                 if appleInterfaceStyle.lowercased().contains("dark") {
                     self.osAppearance = .dark
                 }
@@ -66,8 +69,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             switch self.osAppearance {
             case .light:
                 self.textfield.stringValue = "Light"
+                self.textview.textColor = .black
             case .dark:
                 self.textfield.stringValue = "Dark"
+                self.textview.textColor = .white
             }
         }
     }
