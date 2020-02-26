@@ -42,7 +42,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc func appleInterfaceThemeChangedNotification(notification: Notification) {
-        getAppearance()
+        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+            // Slow down to let system change taking effect.
+            self.getAppearance()
+        }
     }
 
     func getAppearance() {
